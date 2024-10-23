@@ -1,0 +1,107 @@
+import random
+
+def roll_dice():
+    d1 = random.randint(1, 6)
+    d2 = random.randint(1, 6)
+    d3 = random.randint(1, 6)
+
+    print("Dice:", d1, d2, d3)
+
+    return (d1, d2, d3)
+
+def has_pair(val1, val2, val3, num):
+    if (val1 == num and val2 == num) or (val1 == num and val3 == num) or (val2 == num and val3 == num):
+        return True
+    else:
+        return False
+
+
+def is_triplets(val1, val2, val3):
+    return val1 == val2 == val3
+
+def bet_large(val1, val2, val3):
+    credits = -1
+    dice_total = val1 + val2 + val3
+
+    if dice_total > 10 and not is_triplets(val1, val2, val3):
+        credits += 2
+    return credits
+
+def bet_small(val1, val2, val3):
+    credits = -1
+    dice_total = val1 + val2 + val3
+
+    if dice_total < 11 and not is_triplets(val1, val2, val3):
+        credits += 2
+    return credits
+
+def bet_field(val1, val2, val3):
+    credits = -1
+    dice_total = val1 + val2 + val3
+
+    if dice_total < 8 or dice_total > 12:
+        credits += 2
+    return credits
+
+def bet_number(val1, val2, val3, num):
+    credits = -1
+    count = [val1, val2, val3].count(num)
+
+    if count == 1:
+        credits += 2
+    if count == 2:
+        credits += 3
+    elif count == 3:
+        credits += 11
+
+    return credits
+
+def place_bets():
+    bet = int(input("Place bets: "))
+    valid = 'slf123456q'
+
+    bet = ''.join([ch for ch in bet if ch in valid])
+    return bet
+
+if __name__ == '__main__':
+    print(place_bets())
+
+def play_one_round(bets, credits):
+    val1, val2, val3 = roll_dice()
+
+    if 's' in bets:
+        credits += bet_small(val1, val2, val3)
+    if 'l' in bets:
+        credits += bet_large(val1,val2, val3)
+    if 'f' in bets:
+        credits += bet_field(val1, val2, val3)
+
+    for num in range(1, 7):
+        if str(num) in bets:
+            credits += bet_number(val1, val2, val3, num)
+
+    print(f"Credits: {credits}")
+    return credits
+
+def play(credits):
+    while credits > 0 or input() == 'q':
+        bets = place_bets()
+
+        if credits > 0:
+            credits = play_one_round(bets, credits)
+        else:
+            print("You do not have enough credits for these bets.")
+            break
+    else:
+        print("Thanks for playing!")
+
+def play_until_broke(bets, credits):
+    rounds = 0
+
+    while credits > 0:
+        credits = play_one_round(bets, credits)
+        rounds += 1
+
+    print(f"Rounds: {rounds}")
+    return rounds
+
