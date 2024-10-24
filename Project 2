@@ -94,12 +94,12 @@ def bet_number(val1, val2, val3, num):
 #where you're making a list and appending to it if the input is valid
 #it is a for loop that is checking for the str in the str in bet if it is in the valid variable list
 def place_bets():
-    bet = int(input("Place bets: "))
+    bet = input("Place bets: ")
     valid = 'slf123456q'
-
     bet = ''.join([ch for ch in bet if ch in valid])
+    
     return bet
-
+    
 #the place bets function is being executed
 if __name__ == '__main__':
     print(place_bets())
