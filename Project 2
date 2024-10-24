@@ -1,6 +1,6 @@
 '''
 Kevin Nguyen
-In depth dice game that can take in differnet type of bets from user input
+In depth dice game that can take in different type of bets from user input
 (small, large and field bets) and stop when the player runs out of credits
 I certify that this code is mine, and mine alone, in accordance with
 GVSU academic honesty policy.
@@ -25,6 +25,7 @@ def roll_dice():
 
 #this is a function that checks if the rolls is the same as another roll
 #if it is matching, it is considered a pair and is returned true, otherwise returned false
+#the vals are the dice rolls from earlier and num is what the player is trying to match with
 def has_pair(val1, val2, val3, num):
     if (val1 == num and val2 == num) or (val1 == num and val3 == num) or (val2 == num and val3 == num):
         return True
@@ -68,9 +69,9 @@ def bet_field(val1, val2, val3):
         credits += 2
     return credits
 
-#this is a function where the player sees how many of the dice values match the number player guessed
+#this is a function where the player sees how many of the dice values match the number that is given
 #a count variable that is stored by making a list of all the dice rolls, then you count how many times
-#the number that the player guessed matches with their dice values, I looked up the count function to do the count variable
+#the given number that the player matches with their dice values, I looked up the count function to do the count variable
 #first it checks if the count is equal to 1 then player get 2 credits, if the count is also equal to 2
 #player gain 3 credits, if the count is equal to 3 player gain 11 credits
 #if the count equal 1 it means one match, if the count is equal to 2 there is two matching
@@ -103,11 +104,11 @@ def place_bets():
 if __name__ == '__main__':
     print(place_bets())
 
-#this is a function that is simulating one round being played, the parameters that are being taken in are bets and credits
+#this is a function that is simulating one round being played, it is checking if you have a bet placed down then 
+#your credits is adjusted accordingly to your bet that was made
 #the previous dice rolls are being assigned to the roll dice function, then it checks if 's', 'l', and 'f' are found in bets
 #these indicates if the player made a certain, for example s = small bet, l = large bet, f = field bet, then their bet made is
 #adjusted to their credits
-
 def play_one_round(bets, credits):
     val1, val2, val3 = roll_dice()
 
@@ -128,7 +129,7 @@ def play_one_round(bets, credits):
     print(f"Credits: {credits}")
     return credits
 
-#this is a function that has a parameter being credits, there is a while loop function when credit is less
+#this is a function that checks if the player still has credits, there is a while loop function when credit is less
 #than 0 or the input is q, while true the player will keep getting prompted to enter a bet
 #checks if player credits are greater than 0, they keep playing, otherwise a print statement
 #saying you don't have enough credit for the bets is printed and the while loop function ends
