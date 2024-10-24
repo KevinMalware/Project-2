@@ -1,5 +1,19 @@
+'''
+Kevin Nguyen
+In depth dice game that can take in differnet type of bets from user input
+(small, large and field bets) and stop when the player runs out of credits
+I certify that this code is mine, and mine alone, in accordance with
+GVSU academic honesty policy.
+COMPLETION DATE: 10/22/2024
+'''
+
+#first we have to use import a module called random
+#in order to use its function for the dice
 import random
 
+#is a function that works as the dice that is going to be used
+#it rolls three variables that will be three dice that we will be using
+#the range is from 1 - 6, it prints out the dice and its three rolls
 def roll_dice():
     d1 = random.randint(1, 6)
     d2 = random.randint(1, 6)
@@ -9,16 +23,23 @@ def roll_dice():
 
     return (d1, d2, d3)
 
+#this is a function that checks if the rolls is the same as another roll
+#if it is matching, it is considered a pair and is returned true, otherwise returned false
 def has_pair(val1, val2, val3, num):
     if (val1 == num and val2 == num) or (val1 == num and val3 == num) or (val2 == num and val3 == num):
         return True
     else:
         return False
 
-
+#this is a function that checks if the rolls are all the same
+#if true the values are returned, otherwise will return false, I used chatgpt to help me understand
+#how to efficiently check if all 3 are the same instead of writing a bunch of code
 def is_triplets(val1, val2, val3):
     return val1 == val2 == val3
 
+#this is a function that is relating to a large bet, initial credits to start with is -1
+#dicetotal is the sum all the rolls, checks if the dice total is greater than 10 and are not all the same
+#player win 2 credits, in all the bets, initial credits and dice sum will all be the same
 def bet_large(val1, val2, val3):
     credits = -1
     dice_total = val1 + val2 + val3
@@ -27,6 +48,8 @@ def bet_large(val1, val2, val3):
         credits += 2
     return credits
 
+#this is a function that is relating to a small bet, checks if the dice total is less than 11 and are not
+#all the same, player win 2 credits
 def bet_small(val1, val2, val3):
     credits = -1
     dice_total = val1 + val2 + val3
@@ -35,6 +58,8 @@ def bet_small(val1, val2, val3):
         credits += 2
     return credits
 
+##this is a function that is relating to a field, checks if the dice total is less than 8 or greater
+#than 12, player win 2 credits
 def bet_field(val1, val2, val3):
     credits = -1
     dice_total = val1 + val2 + val3
@@ -43,19 +68,30 @@ def bet_field(val1, val2, val3):
         credits += 2
     return credits
 
+#this is a function where the player sees how many of the dice values match the number player guessed
+#a count variable that is stored by making a list of all the dice rolls, then you count how many times
+#the number that the player guessed matches with their dice values, I looked up the count function to do the count variable
+#first it checks if the count is equal to 1 then player get 2 credits, if the count is also equal to 2
+#player gain 3 credits, if the count is equal to 3 player gain 11 credits
+#if the count equal 1 it means one match, if the count is equal to 2 there is two matching
+#if the count is three it means they're all matching
 def bet_number(val1, val2, val3, num):
     credits = -1
     count = [val1, val2, val3].count(num)
 
     if count == 1:
         credits += 2
-    if count == 2:
+    elif count == 2:
         credits += 3
     elif count == 3:
         credits += 11
 
     return credits
 
+#this is a function where you're prompting the user to enter a bet, there is variable called valid where
+#the only inputs that are acceptable are listed, in order to get rid of the invalid stuff there is a bet variable
+#where you're making a list and appending to it if the input is valid
+#it is a for loop that is checking for the str in the str in bet if it is in the valid variable list
 def place_bets():
     bet = int(input("Place bets: "))
     valid = 'slf123456q'
@@ -63,9 +99,13 @@ def place_bets():
     bet = ''.join([ch for ch in bet if ch in valid])
     return bet
 
+#the place bets function is being executed
 if __name__ == '__main__':
     print(place_bets())
 
+#this is a function that is simulating one round being played, the parameters that are being taken in are bets and credits
+#the previous dice rolls are being assigned to the roll dice function, then it checks if 's', 'l', and 'f' are found in bets
+#these indicates if the player
 def play_one_round(bets, credits):
     val1, val2, val3 = roll_dice()
 
