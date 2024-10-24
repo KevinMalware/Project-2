@@ -105,7 +105,9 @@ if __name__ == '__main__':
 
 #this is a function that is simulating one round being played, the parameters that are being taken in are bets and credits
 #the previous dice rolls are being assigned to the roll dice function, then it checks if 's', 'l', and 'f' are found in bets
-#these indicates if the player
+#these indicates if the player made a certain, for example s = small bet, l = large bet, f = field bet, then their bet made is
+#adjusted to their credits
+
 def play_one_round(bets, credits):
     val1, val2, val3 = roll_dice()
 
@@ -116,13 +118,21 @@ def play_one_round(bets, credits):
     if 'f' in bets:
         credits += bet_field(val1, val2, val3)
 
+#first checks if the number the player inputted is between from 1-6 exclusive with a for loop,
+#if within the range it then checks if the number is in bets variable, if it is the player credits is adjusted
     for num in range(1, 7):
         if str(num) in bets:
             credits += bet_number(val1, val2, val3, num)
 
+#the credit is being printed
     print(f"Credits: {credits}")
     return credits
 
+#this is a function that has a parameter being credits, there is a while loop function when credit is less
+#than 0 or the input is q, while true the player will keep getting prompted to enter a bet
+#checks if player credits are greater than 0, they keep playing, otherwise a print statement
+#saying you don't have enough credit for the bets is printed and the while loop function ends
+#also when the loop ends, the player gets a thanks for playing message
 def play(credits):
     while credits > 0 or input() == 'q':
         bets = place_bets()
@@ -135,6 +145,9 @@ def play(credits):
     else:
         print("Thanks for playing!")
 
+#this is a function that has a while loop function with a round variable that is being stored to count
+#how many rounds have been played and starts at 0, when credits is greater than 0 a round is played
+#and the rounds variable is added by 1
 def play_until_broke(bets, credits):
     rounds = 0
 
@@ -142,6 +155,7 @@ def play_until_broke(bets, credits):
         credits = play_one_round(bets, credits)
         rounds += 1
 
+#the rounds is being printed 
     print(f"Rounds: {rounds}")
     return rounds
 
